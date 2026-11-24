@@ -1,0 +1,18 @@
+---
+// Shows the project screenshot, or a lab-style placeholder until one is added.
+interface Props {
+  src?: string;
+  alt?: string;
+  label?: string;
+  class?: string;
+}
+const { src, alt = '', label = '[ screenshot ]', class: className = 'cover' } = Astro.props;
+---
+
+{
+  src ? (
+    <img class={className} src={src} alt={alt} loading="lazy" decoding="async" />
+  ) : (
+    <div class:list={[className, 'placeholder']} aria-hidden="true">{label}</div>
+  )
+}

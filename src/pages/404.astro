@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404" description="This page dissolved somewhere in the lab.">
+  <section class="lost">
+    <p class="err">✕ experiment failed</p>
+    <h1>4<span>0</span>4</h1>
+    <p class="lead">This page dissolved somewhere in the lab. Even alchemists have bad days.</p>
+    <pre>$ curl -I <span id="lost-path">/this-page</span>
+HTTP/2 404
+x-lab-note: QA would have caught this</pre>
+    <div class="btn-row">
+      <a class="btn" href="/">← back to the lab</a>
+      <a class="btn btn--ghost" href="/experiments/">See experiments</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const el = document.getElementById('lost-path');
+  if (el) el.textContent = window.location.pathname;
+</script>

@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, jobs, skills, hobbies } from '../data/site';
+---
+
+<Base title="The alchemist" description="About Lilly: front-end developer with a QA mindset." current="about">
+  <section class="about-hero">
+    <div class="intro">
+      <p class="eyebrow">// whoami</p>
+      <h1 class="display">The alchemist</h1>
+      <p class="lead">Front-end developer with a QA mindset. I build websites, then try to break them before anyone else can.</p>
+      {site.cv && <a class="btn btn--outline" href={site.cv} download>Download CV (PDF) ↓</a>}
+    </div>
+    {
+      site.portrait ? (
+        <img class="portrait" src={site.portrait} alt="Portrait of Lilly" />
+      ) : (
+        <div class="placeholder" style="aspect-ratio:4/5" aria-hidden="true">[ portrait ]</div>
+      )
+    }
+  </section>
+
+  <section class="section split" data-reveal>
+    <h2 class="eyebrow">// story</h2>
+    <div class="body-lg">
+      <p>
+        I went straight from university into web development and never looked back. I'm a founding team member of
+        <a href="https://junglecreatives.com/">Jungle Creatives</a>: we started as a small group building websites and
+        grew into a full-service digital agency.
+      </p>
+      <p>
+        Since then I've worked as a full-time WordPress developer, keeping client sites on WP Engine healthy, and in
+        web operations, running e-commerce purchase flows, cloning domains and managing Cloudflare and CDN setups.
+        Along the way I also wrote copy, including email campaigns in Klaviyo, so I think about what a page says, not
+        only how it's built.
+      </p>
+      <p>
+        What I enjoy most is the messy middle: the redirect loop nobody can explain, the cache that won't clear, the
+        layout that breaks at exactly 568px. I like finding out why, and fixing it properly.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="career-h">
+    <h2 id="career-h" class="eyebrow">// git log --career</h2>
+    <ol class="jobs">
+      {
+        jobs.map((j) => (
+          <li class="job" data-reveal>
+            <span class="when">{j.when}</span>
+            <div>
+              <span class="role">{j.role}</span>
+              <span class="where">{j.where}</span>
+            </div>
+            <span class="focus">{j.focus}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="skills-h">
+    <h2 id="skills-h" class="eyebrow" style="margin-bottom:24px">// periodic table of skills</h2>
+    <ul class="elements" data-stagger>
+      {
+        skills.map((s) => (
+          <li class="element">
+            <div class="top">
+              <span class="sym" aria-hidden="true">{s.sym}</span>
+              <span class="n">{s.n}</span>
+            </div>
+            <span class="group">{s.group}</span>
+            <span class="tools">{s.tools}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section split" data-reveal>
+    <h2 class="eyebrow">// outside the lab</h2>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p class="body-lg" style="margin:0">
+        I play the piano, and music and dance are a big part of my life. I recharge in nature, with a good book or a
+        film, and stay sane by running and lifting kettlebells.
+      </p>
+      <ul class="tags">
+        {hobbies.map((h) => <li class="tag">{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta" data-reveal>
+    <h2>Want to build something together?</h2>
+    <a class="btn" href="/contact/">Start an experiment →</a>
+  </section>
+</Base>

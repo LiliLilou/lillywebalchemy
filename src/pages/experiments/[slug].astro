@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('experiments')).sort((a, b) => a.data.order - b.data.order);
+  return all.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: all[i - 1] ?? null, next: all[i + 1] ?? null },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const prettyUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<Base title={d.title} description={d.summary} current="experiments">
+  <section class="page-head">
+    <a class="back" href="/experiments/">← all experiments</a>
+    <p class="eyebrow">{d.code}</p>
+    <h1 class="display">
+      {d.title}
+      {d.subtitle && (<><br /><span style="color:var(--muted)">{d.subtitle}</span></>)}
+    </h1>
+    <p class="lead">{d.summary}</p>
+  </section>
+
+  <dl class="facts">
+    <div><dt>ROLE</dt><dd>{d.role}</dd></div>
+    <div><dt>STACK</dt><dd>{d.tags.join(', ')}</dd></div>
+    {d.with && <div><dt>WITH</dt><dd>{d.with}</dd></div>}
+    {d.live && <div><dt>LIVE</dt><dd><a href={d.live}>{prettyUrl(d.live)} ↗</a></dd></div>}
+    {d.repo && <div><dt>CODE</dt><dd><a href={d.repo}>GitHub ↗</a></dd></div>}
+  </dl>
+
+  <div class="case-cover" data-reveal>
+    <Cover src={d.cover} alt={d.coverAlt ?? `${d.title} screenshot`} label="[ project screenshot ]" class="" />
+  </div>
+
+  <article class="prose">
+    <Content />
+  </article>
+
+  {
+    d.labNotes && (
+      <details class="lab-notes" open>
+        <summary>
+          <h2>Lab notes: what broke and how I fixed it</h2>
+          <span class="toggle" aria-hidden="true"></span>
+        </summary>
+        <table class="notes-table">
+          <thead>
+            <tr><th scope="col">PROBLEM</th><th scope="col">CAUSE</th><th scope="col">FIX</th></tr>
+          </thead>
+          <tbody>
+            {d.labNotes.map((n) => (
+              <tr>
+                <td>{n.problem}</td>
+                <td data-label="CAUSE">{n.cause}</td>
+                <td data-label="FIX">{n.fix}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {d.toolkit && <p class="notes-foot">toolkit: {d.toolkit}</p>}
+      </details>
+    )
+  }
+
+  <nav class="pager" aria-label="More experiments">
+    {prev ? <a href={`/experiments/${prev.id}/`}>← {prev.data.code} {prev.data.title}</a> : <span />}
+    {next ? <a href={`/experiments/${next.id}/`}>{next.data.code} {next.data.title} →</a> : <a href="/contact/">Start an experiment →</a>}
+  </nav>
+</Base>

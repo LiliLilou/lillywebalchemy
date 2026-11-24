@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+
+const all = (await getCollection('experiments')).sort((a, b) => a.data.order - b.data.order);
+const filters = ['All', 'Custom', 'WordPress', 'Webflow'];
+---
+
+<Base title="Experiments" description="Projects by Lilly in custom code, WordPress and Webflow." current="experiments">
+  <section class="page-head">
+    <p class="eyebrow">// ls ./experiments</p>
+    <h1 class="display">Experiments</h1>
+    <p class="lead">Every project here started as a problem and ended up live. Filter by what it was made with.</p>
+  </section>
+
+  <div class="filters" role="group" aria-label="Filter by stack">
+    {
+      filters.map((f, i) => (
+        <button type="button" class="filter" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {f}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="exp-grid" data-stagger>
+    {
+      all.map((e) => (
+        <a class="exp-card" href={`/experiments/${e.id}/`} data-stack={e.data.stack}>
+          <Cover src={e.data.cover} alt={e.data.coverAlt ?? `${e.data.title} screenshot`} />
+          <div class="meta">
+            <span>{e.data.code}</span>
+            <span>{e.data.year}</span>
+          </div>
+          <h2>{e.data.title}</h2>
+          <p>{e.data.hook}</p>
+          <span class="note">{e.data.tags.join(' · ')}</span>
+        </a>
+      ))
+    }
+  </div>
+  <p class="note" id="filter-status" role="status" style="margin-top:24px"></p>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const cards = document.querySelectorAll<HTMLElement>('.exp-card');
+  const status = document.getElementById('filter-status');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = f === 'All' || card.dataset.stack === f;
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      if (status) status.textContent = `${shown} experiment${shown === 1 ? '' : 's'} shown`;
+    });
+  });
+</script>

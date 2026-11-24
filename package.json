@@ -1,0 +1,18 @@
+{
+  "name": "lillywebalchemy",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio of Lilly, front-end developer with a QA mindset.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.0.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.0"
+  }
+}

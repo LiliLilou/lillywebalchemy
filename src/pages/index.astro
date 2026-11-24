@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cover from '../components/Cover.astro';
+import { pillars } from '../data/site';
+
+const featured = (await getCollection('experiments', ({ data }) => data.featured)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base>
+  <section class="hero">
+    <p class="eyebrow">// web alchemy lab</p>
+    <h1 class="display">
+      <span class="sr-only">Front-end developer</span>
+      <span aria-hidden="true"><span data-scramble>Front-end</span><br /><span data-scramble>developer</span></span><span class="cursor" aria-hidden="true">█</span>
+    </h1>
+    <p class="lead">
+      I turn ideas into fast, reliable websites, in custom code, WordPress and Webflow, and I test them like QA,
+      because I am QA too.
+    </p>
+    <div class="btn-row">
+      <a class="btn" href="/experiments/">See experiments →</a>
+      <a class="btn btn--ghost" href="/contact/">Start an experiment</a>
+    </div>
+  </section>
+
+  <section class="section split" data-reveal>
+    <h2 class="eyebrow">// readme.md</h2>
+    <p class="body-lg" style="margin:0">
+      Hi, I'm Lilly. I build websites end to end and then try to break them before anyone else can. I've shipped
+      marketing sites, a cybersecurity conference site and a four-language blog running behind a reverse proxy, often
+      as the only developer on the project.
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="pillars-h">
+    <h2 id="pillars-h" class="eyebrow" style="margin-bottom:32px">// compounds</h2>
+    <div class="pillars" data-stagger>
+      {
+        pillars.map((p) => (
+          <div class="card pillar">
+            <span class="note">{p.n}</span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="exp-h">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:32px">
+      <h2 id="exp-h" class="h2">Selected experiments</h2>
+      <a class="mono" href="/experiments/" style="font-size:14px;text-decoration:none">all experiments →</a>
+    </div>
+    <div class="exp-list">
+      {
+        featured.map((e) => (
+          <a class="exp-row" href={`/experiments/${e.id}/`} data-reveal>
+            <Cover src={e.data.cover} alt={e.data.coverAlt ?? `${e.data.title} screenshot`} />
+            <div class="exp-info">
+              <span class="eyebrow">{e.data.code}</span>
+              <h3>{e.data.title}</h3>
+              <p>{e.data.hook}</p>
+              <ul class="tags">
+                {e.data.tags.map((t) => (
+                  <li class="tag">{t}</li>
+                ))}
+              </ul>
+              <span class="more">open lab notes ↗</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cta" data-reveal>
+    <p class="eyebrow">// next_experiment</p>
+    <h2>Got an idea that needs turning into a website?</h2>
+    <a class="btn" href="/contact/">Start an experiment →</a>
+  </section>
+</Base>

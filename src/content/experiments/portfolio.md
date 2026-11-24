@@ -10,6 +10,8 @@ hook: Astro, GSAP and a staging-to-live git workflow. Source on GitHub.
 summary: The site you are on. Designed, built and tested by me, with motion that stays fast and a git workflow that mirrors a real team.
 role: Design, development + QA
 repo: https://github.com/LiliLilou/lillywebalchemy
+cover: /images/portfolio.webp
+coverAlt: About page of this portfolio with a green line-art portrait
 ---
 
 ## Stack

@@ -19,7 +19,7 @@ export const site = {
   cv: '/cv.pdf',
 
   // Put your photo at public/images/portrait.jpg. Leave '' to show the placeholder.
-  portrait: '',
+  portrait: '/images/portrait.webp',
 
   // Contact form endpoint, e.g. a free Formspree form: 'https://formspree.io/f/xxxxxxx'.
   // Leave '' to hide the form and show only the email and links.

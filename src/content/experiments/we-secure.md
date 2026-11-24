@@ -10,7 +10,7 @@ summary: A marketing site for a Belgrade cybersecurity company, rich in motion a
 role: Developer + QA
 with: Freelance, Jungle Creatives (design by Jungle Creatives)
 live: https://we-secure.eu/
-# cover: /images/we-secure.jpg
+cover: /images/we-secure.webp
 ---
 
 ## Context

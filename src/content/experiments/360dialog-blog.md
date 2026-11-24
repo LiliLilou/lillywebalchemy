@@ -11,7 +11,7 @@ summary: I made a WordPress blog run invisibly under a Framer site's domain, thr
 role: Sole developer + QA
 with: Freelance, Jungle Creatives
 live: https://360dialog.com/blog/
-# cover: /images/360dialog.jpg
+cover: /images/360dialog.webp
 toolkit: curl -I · curl -L · HTTP status codes · CORS headers · redirect chains · custom PHP MU plugins
 labNotes:
   - problem: Redirect loops, origin domain leaking

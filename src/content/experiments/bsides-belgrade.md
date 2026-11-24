@@ -10,7 +10,7 @@ summary: A fast, focused site for a community-driven cybersecurity conference, w
 role: Development, copy, SEO + QA
 with: Freelance, Jungle Creatives (design by Jungle Creatives)
 live: https://www.bsidesbeg.org/
-# cover: /images/bsides.jpg
+cover: /images/bsides.webp
 ---
 
 ## Context
